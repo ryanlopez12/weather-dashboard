@@ -1,25 +1,33 @@
 function search() {
     var searchcity = document.getElementById("searchcity").innerText;
     console.log(searchcity);
-    let url = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchcity + "&exclude=current,minutely,hourly&appid=9f61e2c64b7d7564d396645992b24749"
+    let url = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchcity + "&appid=9f61e2c64b7d7564d396645992b24749"
     getWeatherText(url);
     console.log(getWeatherText);
 }
 
-/*function gotPosition(pos) {
+function gotPosition(pos) {
     var lat = pos.coords.latitude;
     var long = pos.coords.longitude;
     getForecast(lat,long);
 }
-*/
+
 //function getForecast(lat, long) {
 //    let url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=current,minutely,hourly&appid=9f61e2c64b7d7564d396645992b24749"
 //    getWeatherText(url);
 //}
+function resolveAfter2Seconds() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('resolved');
+      }, 2000);
+    });
+  }
 
 async function getWeatherText(url) {
     var weatherObject = await fetch(url);
     var weatherText = await weatherObject.text();
+    const news = await resolveAfter2Seconds();
     parseWeather(weatherText);
 }
 
@@ -90,4 +98,3 @@ function timestampToTime(timeStamp) {
     return hours + ":" + minutes;
     }
     
-//navigator.geolocation.getCurrentPosition(gotPosition);
