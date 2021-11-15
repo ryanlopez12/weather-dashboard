@@ -1,3 +1,9 @@
+var search = function() {
+    let url = "https://api.openweathermap.org/data/2.5/onecall?lat=&lon=&exclude=current,minutely,hourly&appid=9f61e2c64b7d7564d396645992b24749"
+    getWeatherText(url);
+}
+
+
 var gotPosition = function(pos) {
     var lat = pos.coords.latitude;
     var long = pos.coords.longitude;
