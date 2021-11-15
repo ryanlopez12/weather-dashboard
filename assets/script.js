@@ -1,21 +1,21 @@
 function search() {
-    console.log("searching");
-    let url = "https://api.openweathermap.org/data/2.5/onecall?lat=&lon=&exclude=current,minutely,hourly&appid=9f61e2c64b7d7564d396645992b24749"
+    var searchcity = document.getElementById("searchcity").innerText;
+    console.log(searchcity);
+    let url = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchcity + "&exclude=current,minutely,hourly&appid=9f61e2c64b7d7564d396645992b24749"
     getWeatherText(url);
     console.log(getWeatherText);
 }
 
-
-function gotPosition(pos) {
+/*function gotPosition(pos) {
     var lat = pos.coords.latitude;
     var long = pos.coords.longitude;
     getForecast(lat,long);
 }
-
-function getForecast(lat, long) {
-    let url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=current,minutely,hourly&appid=9f61e2c64b7d7564d396645992b24749"
-    getWeatherText(url);
-}
+*/
+//function getForecast(lat, long) {
+//    let url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=current,minutely,hourly&appid=9f61e2c64b7d7564d396645992b24749"
+//    getWeatherText(url);
+//}
 
 async function getWeatherText(url) {
     var weatherObject = await fetch(url);
@@ -25,6 +25,7 @@ async function getWeatherText(url) {
 
 function parseWeather(weatherText) {
     var weatherJSON = JSON.parse(weatherText);
+    console.log(weatherJSON);
     var dailyForecast = weatherJSON.daily;
     for (x = 0; x < dailyForecast.length; x++) {
         var day = dailyForecast[x];
@@ -45,14 +46,15 @@ function parseWeather(weatherText) {
     }
 }
 
-function displayWeatherDay(dayOfWeek, description, icon, sunrise, sunset, highTemp, lowTemp, humidity) {
+function displayWeatherDay(dayOfWeek, description, icon, sunrise, sunset, highTemp, lowTemp, windSpeed, humidity) {
     var out = "<div class='dayBox'><img src='http://openweathermap.org/img/wn/" + icon + ".png'/>";
     out += "<h2>" + dayOfWeek + "</h2>";
     out += "<h3>" + description + "</h3>";
+    out += "<p>High Temp:" + highTemp + "</p>";
+    out += "<p>Low Temp:" + lowTemp + "</p>";
     out += "<p>Sunrise:" + sunrise + "</p>";
     out += "<p>Sunset:" + sunset + "</p>";
     out += "<p>Humidity: " + humidity + "</p>";
-    console.log(windSpeed);
     out += "<p>Windspeed: " + Math.round(windSpeed) + "</p></div>";
     document.getElementById("forecast").innerHTML += out;
 }
